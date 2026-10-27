@@ -1,0 +1,1569 @@
+EXPERIMENT 1
+
+QUESTION
+
+Design a Lexical analyzer to recognize a few pattern in C. The lexical analyzer should ignore redundant spaces, tabs and new lines, comments etc.
+
+AIM
+
+To design and implement a lexical analyzer to recognize C language tokens while ignoring unnecessary spaces, tabs, new lines and comments.
+
+PROCEDURE
+Open a text editor and create a LEX file named lexer.l.
+Define patterns to recognize keywords, identifiers, numbers, operators and symbols.
+Specify rules to ignore spaces, tabs, new lines and comments.
+Compile the LEX program using Flex and execute it with sample input.
+Display the recognized tokens and verify the output.
+
+PROGRAM
+
+Filename: lexer.l
+
+%{
+#include <stdio.h>
+%}
+
+%%
+"int"|"float"|"char"|"if"|"else" {
+    printf("Keyword: %s\n", yytext);
+}
+
+[a-zA-Z_][a-zA-Z0-9_]* {
+    printf("Identifier: %s\n", yytext);
+}
+
+[0-9]+ {
+    printf("Number: %s\n", yytext);
+}
+
+"+"|"-"|"*"|"/"|"=" {
+    printf("Operator: %s\n", yytext);
+}
+
+[;(),{}] {
+    printf("Symbol: %s\n", yytext);
+}
+
+"//".* ;
+[ \t\n]+ ;
+. ;
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+
+OUTPUT
+
+Input:
+
+int a = 10;
+
+Output:
+
+Keyword: int
+Identifier: a
+Operator: =
+Number: 10
+Symbol: ;
+RESULT
+
+Thus, the lexical analyzer was implemented successfully using LEX to recognize keywords, identifiers, numbers, operators and symbols while ignoring unnecessary spaces, tabs, new lines and single-line comments.
+
+
+
+
+
+EXPERIMENT 2
+QUESTION
+
+Implement the lexical analyzer using Lex, flex or other lexical analyzer generating tools.
+
+AIM
+
+To implement a lexical analyzer using LEX to recognize tokens from the given input.
+
+PROCEDURE
+Create a LEX file named lexer.l.
+Include the required header file.
+Define rules to recognize keywords, identifiers, numbers and operators.
+Compile the program using Flex and GCC.
+Execute the program and display the recognized tokens.
+PROGRAM
+
+Filename: lexer.l
+
+%{
+#include <stdio.h>
+%}
+
+%%
+"int"|"float"|"char"|"if"|"else" {
+    printf("Keyword: %s\n", yytext);
+}
+
+[a-zA-Z_][a-zA-Z0-9_]* {
+    printf("Identifier: %s\n", yytext);
+}
+
+[0-9]+ {
+    printf("Number: %s\n", yytext);
+}
+
+[+\-*/=] {
+    printf("Operator: %s\n", yytext);
+}
+
+[ \t\n]+ ;
+. ;
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+
+OUTPUT
+
+Input:
+
+int a = 10;
+
+Output:
+
+Keyword: int
+Identifier: a
+Operator: =
+Number: 10
+RESULT
+
+Thus, a lexical analyzer was implemented successfully using LEX to recognize tokens in the given input.
+
+
+
+EXPERIMENT 3
+QUESTION
+
+Write a program to implement to recognize a valid arithmetic expression that uses operator +, –, * and /.
+
+AIM
+
+To write a program to recognize a valid arithmetic expression using +, -, * and / operators.
+
+PROCEDURE
+Create a C program.
+Read an arithmetic expression from the user.
+Check whether the expression contains valid operands and operators.
+Verify that operands and operators appear in the correct order.
+Display whether the expression is valid or invalid.
+PROGRAM
+
+Filename: exp3.c
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char s[100];
+    int i = 0, operand = 1, valid = 1, seen = 0;
+
+    printf("Enter expression: ");
+    fgets(s, sizeof(s), stdin);
+
+    while (s[i] != '\0' && s[i] != '\n')
+    {
+        if (isspace(s[i]))
+        {
+            i++;
+            continue;
+        }
+
+        if (isdigit(s[i]))
+        {
+            if (!operand)
+                valid = 0;
+
+            while (isdigit(s[i]))
+                i++;
+
+            operand = 0;
+            seen = 1;
+            continue;
+        }
+
+        if (strchr("+-*/", s[i]) != NULL && !operand)
+            operand = 1;
+        else
+            valid = 0;
+
+        i++;
+    }
+
+    if (operand || !seen)
+        valid = 0;
+
+    if (valid)
+        printf("Valid Expression\n");
+    else
+        printf("Invalid Expression\n");
+
+    return 0;
+}
+Important: Add #include <string.h> along with the header files above because the program uses strchr().
+
+OUTPUT
+
+Input:
+
+Enter expression: 10+20*5
+
+Output:
+
+Valid Expression
+RESULT
+
+Thus, the C program was implemented to recognize valid arithmetic expressions using arithmetic operators.
+
+
+
+
+
+ EXPERIMENT 4: CALCULATOR USING LEX AND YACC
+
+## AIM
+
+To implement a calculator using LEX and YACC to perform arithmetic operations.
+
+## PROCEDURE
+
+1. Create the LEX file `lexer.l` and YACC file `parser.y`.
+2. Define patterns for numbers and arithmetic operators in LEX.
+3. Define arithmetic operations and precedence rules in YACC.
+4. Compile the files using Flex, Bison and GCC.
+5. Execute the program and display the calculated result.
+
+## PROGRAM
+
+File 1: lexer.l
+
+```c
+%{
+#include "parser.tab.h"
+#include <stdlib.h>
+%}
+
+%%
+[0-9]+    { yylval = atoi(yytext); return NUMBER; }
+[ \t\n]+  ;
+.         { return yytext[0]; }
+%%
+
+int yywrap()
+{
+    return 1;
+}
+```
+
+### File 2: parser.y
+
+```c
+%{
+#include <stdio.h>
+int yylex(void);
+void yyerror(const char *s);
+%}
+
+%token NUMBER
+%left '+' '-'
+%left '*' '/'
+
+%%
+input:
+    expr { printf("Result = %d\n", $1); }
+    ;
+
+expr:
+      expr '+' expr { $$ = $1 + $3; }
+    | expr '-' expr { $$ = $1 - $3; }
+    | expr '*' expr { $$ = $1 * $3; }
+    | expr '/' expr { $$ = $1 / $3; }
+    | '(' expr ')'  { $$ = $2; }
+    | NUMBER        { $$ = $1; }
+    ;
+%%
+
+int main()
+{
+    printf("Enter expression: ");
+    yyparse();
+    return 0;
+}
+
+void yyerror(const char *s)
+{
+    printf("Invalid Expression\n");
+}
+```
+
+
+## COMPILATION
+
+```bash
+bison -d parser.y
+flex lexer.l
+gcc parser.tab.c lex.yy.c -o calc -lfl
+./calc
+```
+
+
+
+## OUTPUT
+
+**Input:**
+
+```text
+Enter expression: 5+3
+```
+
+**Output:**
+
+```text
+Result = 8
+```
+
+**Another Example:**
+
+```text
+Enter expression: 5+3*2
+Result = 11
+```
+
+## RESULT
+
+Thus, a calculator was implemented successfully using LEX and YACC to perform arithmetic operations.
+
+
+EXPERIMENT 5
+QUESTION
+
+Write a Program to recognize a valid variable which starts with a letter followed by any number of letters or digits.
+
+AIM
+
+To write a LEX program to recognize a valid variable name.
+
+PROCEDURE
+Create a LEX file named variable.l.
+Include the required header file.
+Define a pattern that starts with a letter followed by letters or digits.
+Compile the program using Flex and GCC.
+Enter a variable name and display whether it is valid or invalid.
+
+PROGRAM
+
+Filename: variable.l
+
+%{
+#include <stdio.h>
+%}
+
+%%
+[a-zA-Z][a-zA-Z0-9]* { printf("Valid Variable\n"); }
+[^ \t\n]+            { printf("Invalid Variable\n"); }
+[ \t\n]+             ;
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+
+OUTPUT
+
+Input:
+
+abc123
+
+Output:
+
+Valid Variable
+RESULT
+
+Thus, the LEX program was implemented successfully to recognize valid variable names.
+
+
+
+EXPERIMENT 6
+QUESTION
+
+Write a LEX Program to convert the substring abc to ABC from the given input string.
+
+AIM
+
+To write a LEX program to replace the substring abc with ABC.
+
+PROCEDURE
+Create a LEX file named convert.l.
+Define a rule to recognize the substring abc.
+Replace each occurrence with ABC.
+Copy all other characters unchanged.
+Execute the program and display the converted string.
+
+
+PROGRAM
+
+Filename: convert.l
+
+%{
+#include <stdio.h>
+%}
+
+%%
+abc     { printf("ABC"); }
+.|\n    { ECHO; }
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+
+OUTPUT
+
+Input:
+
+abcxyzabc
+
+Output:
+
+ABCxyzABC
+RESULT
+
+Thus, the LEX program was implemented successfully to convert the substring abc to ABC.
+
+
+
+# EXPERIMENT 7: NFA-BASED TOKEN RECOGNITION
+
+## QUESTION
+
+Write a C program to implement NFAs that recognize identifiers, constants, and operators of the language.
+
+## AIM
+
+To implement a simple NFA-based recognizer for identifiers, numeric constants and operators using C.
+
+## PROCEDURE
+
+1. Create a C program.
+2. Read a token from the user.
+3. Check the token against identifier, constant and operator patterns.
+4. Identify the matching token category.
+5. Display the recognized token or an invalid-token message.
+
+## PROGRAM
+
+**Filename: `nfa.c`**
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char s[50];
+    int i, id = 1, num = 1;
+
+    printf("Enter token: ");
+    scanf("%49s", s);
+
+    if (isalpha(s[0]) || s[0] == '_')
+    {
+        for (i = 1; s[i]; i++)
+            if (!isalnum(s[i]) && s[i] != '_')
+                id = 0;
+
+        if (id)
+            printf("Identifier\n");
+        else
+            printf("Invalid Token\n");
+    }
+    else if (isdigit(s[0]))
+    {
+        for (i = 0; s[i]; i++)
+            if (!isdigit(s[i]))
+                num = 0;
+
+        if (num)
+            printf("Constant\n");
+        else
+            printf("Invalid Token\n");
+    }
+    else if (strchr("+-*/=<>", s[0]) != NULL && s[1] == '\0')
+        printf("Operator\n");
+    else
+        printf("Invalid Token\n");
+
+    return 0;
+}
+```
+
+## COMPILATION
+
+```bash
+gcc nfa.c -o nfa
+./nfa
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+Enter token: count1
+```
+
+**Output:**
+
+```text
+Identifier
+```
+
+**Another Example 1:**
+
+Input:
+
+```text
+Enter token: 123
+```
+
+Output:
+
+```text
+Constant
+```
+
+**Another Example 2:**
+
+Input:
+
+```text
+Enter token: +
+```
+
+Output:
+
+```text
+Operator
+```
+
+## RESULT
+
+Thus, a C program was implemented successfully to recognize identifiers, numeric constants and operators.
+
+
+
+# EXPERIMENT 8: DFA-BASED TOKEN RECOGNITION
+
+## QUESTION
+
+Write a C program to implement DFAs that recognize identifiers, constants, and operators of a language.
+
+## AIM
+
+To implement a DFA-based recognizer for identifiers, numeric constants and operators using C.
+
+## PROCEDURE
+
+1. Create a C program.
+2. Read a token from the user.
+3. Define states for identifiers, constants and operators.
+4. Process the input characters using state transitions.
+5. Display the recognized token category.
+
+## PROGRAM
+
+**Filename: `dfa.c`**
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char s[50];
+    int i, state = 0;
+
+    printf("Enter token: ");
+    scanf("%49s", s);
+
+    for (i = 0; s[i]; i++)
+    {
+        if (state == 0)
+        {
+            if (isalpha(s[i]) || s[i] == '_')
+                state = 1;
+            else if (isdigit(s[i]))
+                state = 2;
+            else if (strchr("+-*/=<>", s[i]) != NULL)
+                state = 3;
+            else
+                state = -1;
+        }
+        else if (state == 1)
+        {
+            if (!isalnum(s[i]) && s[i] != '_')
+                state = -1;
+        }
+        else if (state == 2)
+        {
+            if (!isdigit(s[i]))
+                state = -1;
+        }
+        else if (state == 3)
+            state = -1;
+
+        if (state == -1)
+            break;
+    }
+
+    if (state == 1)
+        printf("Identifier\n");
+    else if (state == 2)
+        printf("Constant\n");
+    else if (state == 3 && s[1] == '\0')
+        printf("Operator\n");
+    else
+        printf("Invalid Token\n");
+
+    return 0;
+}
+```
+
+## COMPILATION
+
+```bash
+gcc dfa.c -o dfa
+./dfa
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+Enter token: 123
+```
+
+**Output:**
+
+```text
+Constant
+```
+
+**Another Example 1:**
+
+Input:
+
+```text
+Enter token: total1
+```
+
+Output:
+
+```text
+Identifier
+```
+
+**Another Example 2:**
+
+Input:
+
+```text
+Enter token: +
+```
+
+Output:
+
+```text
+Operator
+```
+
+## RESULT
+
+Thus, a DFA-based C program was implemented successfully to recognize identifiers, numeric constants and operators.
+
+
+
+# EXPERIMENT 8: DFA-BASED TOKEN RECOGNITION
+
+## QUESTION
+
+Write a C program to implement DFAs that recognize identifiers, constants, and operators of a language.
+
+## AIM
+
+To implement a DFA-based recognizer for identifiers, numeric constants and operators using C.
+
+## PROCEDURE
+
+1. Create a C program.
+2. Read a token from the user.
+3. Define states for identifiers, constants and operators.
+4. Process the input characters using state transitions.
+5. Display the recognized token category.
+
+## PROGRAM
+
+**Filename: `dfa.c`**
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int main()
+{
+    char s[50];
+    int i, state = 0;
+
+    printf("Enter token: ");
+    scanf("%49s", s);
+
+    for (i = 0; s[i]; i++)
+    {
+        if (state == 0)
+        {
+            if (isalpha(s[i]) || s[i] == '_')
+                state = 1;
+            else if (isdigit(s[i]))
+                state = 2;
+            else if (strchr("+-*/=<>", s[i]) != NULL)
+                state = 3;
+            else
+                state = -1;
+        }
+        else if (state == 1)
+        {
+            if (!isalnum(s[i]) && s[i] != '_')
+                state = -1;
+        }
+        else if (state == 2)
+        {
+            if (!isdigit(s[i]))
+                state = -1;
+        }
+        else if (state == 3)
+            state = -1;
+
+        if (state == -1)
+            break;
+    }
+
+    if (state == 1)
+        printf("Identifier\n");
+    else if (state == 2)
+        printf("Constant\n");
+    else if (state == 3 && s[1] == '\0')
+        printf("Operator\n");
+    else
+        printf("Invalid Token\n");
+
+    return 0;
+}
+```
+
+## COMPILATION
+
+```bash
+gcc dfa.c -o dfa
+./dfa
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+Enter token: 123
+```
+
+**Output:**
+
+```text
+Constant
+```
+
+**Another Example 1:**
+
+Input:
+
+```text
+Enter token: total1
+```
+
+Output:
+
+```text
+Identifier
+```
+
+**Another Example 2:**
+
+Input:
+
+```text
+Enter token: +
+```
+
+Output:
+
+```text
+Operator
+```
+
+## RESULT
+
+Thus, a DFA-based C program was implemented successfully to recognize identifiers, numeric constants and operators.
+
+
+# EXPERIMENT 10
+
+## QUESTION
+
+Write a program to implement the back end of the compiler which takes the three-address code and produces 8086 assembly language instructions. The target instructions can be simple MOV, ADD, SUB and jump instructions.
+
+## AIM
+
+To implement a simple compiler back end that converts three-address code into 8086-style assembly instructions.
+
+## PROCEDURE
+
+1. Create a C program.
+2. Read a three-address code statement.
+3. Separate the destination, operands and operator.
+4. Generate corresponding MOV, ADD or SUB instructions.
+5. Display the generated assembly instructions.
+
+## PROGRAM
+
+**Filename: `backend.c`**
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char tac[100], dest[20], rhs[50];
+    char *op;
+
+    printf("Enter TAC (t1=a+b): ");
+    scanf("%99s", tac);
+
+    if (sscanf(tac, "%19[^=]=%49s", dest, rhs) != 2)
+    {
+        printf("Invalid TAC\n");
+        return 1;
+    }
+
+    op = strpbrk(rhs, "+-");
+
+    if (op)
+    {
+        char symbol = *op;
+        *op = '\0';
+
+        printf("MOV AX, %s\n", rhs);
+        printf("%s AX, %s\n",
+               symbol == '+' ? "ADD" : "SUB", op + 1);
+        printf("MOV %s, AX\n", dest);
+    }
+    else
+        printf("MOV %s, %s\n", dest, rhs);
+
+    return 0;
+}
+```
+
+## COMPILATION
+
+```bash
+gcc backend.c -o backend
+./backend
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+t1=a+b
+```
+
+**Output:**
+
+```text
+MOV AX, a
+ADD AX, b
+MOV t1, AX
+```
+
+## RESULT
+
+Thus, a simple compiler back end was implemented to convert three-address code into 8086-style assembly instructions.
+
+
+
+# EXPERIMENT 11
+
+## QUESTION
+
+Write a LEX program to find out the total number of vowels and consonants from the given input string.
+
+## AIM
+
+To count the total number of vowels and consonants in a given string using LEX.
+
+## PROCEDURE
+
+1. Create a LEX file named `count.l`.
+2. Declare counters for vowels and consonants.
+3. Define rules to recognize vowels and consonants.
+4. Read the input string and count the characters.
+5. Display the total number of vowels and consonants.
+
+## PROGRAM
+
+**Filename: `count.l`**
+
+```c
+%{
+#include <stdio.h>
+int v = 0, c = 0;
+%}
+
+%%
+[aeiouAEIOU] { v++; }
+[a-zA-Z]     { c++; }
+.|\n         ;
+%%
+
+int main()
+{
+    printf("Enter string:\n");
+    yylex();
+    printf("Vowels = %d\nConsonants = %d\n", v, c);
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+```
+
+## COMPILATION
+
+```bash
+flex count.l
+gcc lex.yy.c -o count -lfl
+./count
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+Hello
+```
+
+**Output:**
+
+```text
+Vowels = 2
+Consonants = 3
+```
+
+## RESULT
+
+Thus, the LEX program was implemented successfully to count vowels and consonants in a given string.
+
+
+
+# EXPERIMENT 12
+
+## QUESTION
+
+Write a program to recognize the valid control structure syntax of the C language using `for` and `while` loops.
+
+## AIM
+
+To implement a LEX program to recognize basic `for` and `while` loop syntax in C.
+
+## PROCEDURE
+
+1. Create a LEX file named `loop.l`.
+2. Define patterns for basic `for` and `while` loops.
+3. Specify the required parentheses, conditions and braces.
+4. Compile the program using Flex and GCC.
+5. Enter a loop statement and display whether the syntax is recognized.
+
+## PROGRAM
+
+**Filename: `loop.l`**
+
+```c
+%{
+#include <stdio.h>
+int found = 0;
+%}
+
+%%
+"for"[ \t]*"("[^;]*";"[^;]*";"[^)]*")"[ \t]*"{"[^}]*"}" {
+    printf("Valid For Loop\n");
+    found = 1;
+}
+
+"while"[ \t]*"("[^)]*")"[ \t]*"{"[^}]*"}" {
+    printf("Valid While Loop\n");
+    found = 1;
+}
+
+[ \t\n]+ ;
+. ;
+%%
+
+int main()
+{
+    printf("Enter loop statement:\n");
+    yylex();
+
+    if (!found)
+        printf("Invalid Loop Syntax\n");
+
+    return 0;
+}
+
+int yywrap()
+{
+    return 1;
+}
+```
+
+## COMPILATION
+
+```bash
+flex loop.l
+gcc lex.yy.c -o loop -lfl
+./loop
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+while (a < 5) { a++; }
+```
+
+**Output:**
+
+```text
+Enter loop statement:
+Valid While Loop
+```
+
+## RESULT
+
+Thus, a LEX program was implemented to recognize basic `for` and `while` loop syntax in C.
+
+# EXPERIMENT 13
+
+## QUESTION
+
+Convert the BNF rules into YACC form and write a program to generate an abstract syntax tree.
+
+## AIM
+
+To implement a parser using YACC to generate an abstract syntax tree (AST) for arithmetic expressions.
+
+## PROCEDURE
+
+1. Create the LEX file `lexer.l` and YACC file `parser.y`.
+2. Define tokens for identifiers, numbers and arithmetic operators.
+3. Write grammar rules in YACC to parse arithmetic expressions.
+4. Construct AST nodes for operands and operators.
+5. Compile and execute the program to display the AST.
+
+## PROGRAM
+
+### File 1: `lexer.l`
+
+```c
+%{
+#include "parser.tab.h"
+#include <stdlib.h>
+%}
+
+%%
+[a-zA-Z][a-zA-Z0-9]* {
+    yylval.text = strdup(yytext);
+    return ID;
+}
+
+[0-9]+ {
+    yylval.text = strdup(yytext);
+    return ID;
+}
+
+[ \t\n]+ ;
+. { return yytext[0]; }
+%%
+
+int yywrap()
+{
+    return 1;
+}
+```
+
+### File 2: `parser.y`
+
+```c
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Node {
+    char val[20];
+    struct Node *left, *right;
+} Node;
+
+Node *root;
+
+Node *make(char *v, Node *l, Node *r)
+{
+    Node *n = malloc(sizeof(Node));
+    snprintf(n->val, sizeof(n->val), "%s", v);
+    n->left = l;
+    n->right = r;
+    return n;
+}
+
+void print(Node *n, int d)
+{
+    int i;
+    if (!n) return;
+
+    for (i = 0; i < d; i++)
+        printf("  ");
+
+    printf("%s\n", n->val);
+    print(n->left, d + 1);
+    print(n->right, d + 1);
+}
+
+int yylex(void);
+void yyerror(const char *s);
+%}
+
+%union {
+    char *text;
+    Node *node;
+}
+
+%token <text> ID
+%type <node> expr
+%left '+' '-'
+%left '*' '/'
+
+%%
+input:
+    expr { root = $1; }
+    ;
+
+expr:
+      expr '+' expr { $$ = make("+", $1, $3); }
+    | expr '-' expr { $$ = make("-", $1, $3); }
+    | expr '*' expr { $$ = make("*", $1, $3); }
+    | expr '/' expr { $$ = make("/", $1, $3); }
+    | '(' expr ')'  { $$ = $2; }
+    | ID            { $$ = make($1, NULL, NULL); }
+    ;
+%%
+
+int main()
+{
+    printf("Enter expression: ");
+    if (yyparse() == 0)
+        print(root, 0);
+
+    return 0;
+}
+
+void yyerror(const char *s)
+{
+    printf("Invalid expression\n");
+}
+```
+
+## COMPILATION
+
+```bash
+bison -d parser.y
+flex lexer.l
+gcc parser.tab.c lex.yy.c -o ast -lfl
+./ast
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+a+b*c
+```
+
+**Output:**
+
+```text
++
+  a
+  *
+    b
+    c
+```
+
+## RESULT
+
+Thus, an abstract syntax tree was generated successfully using LEX and YACC for an arithmetic expression.
+
+
+
+# EXPERIMENT 14
+
+## QUESTION
+
+Write a program to implement the symbol table.
+
+## AIM
+
+To implement a symbol table to store and display identifiers and their data types.
+
+## PROCEDURE
+
+1. Create a C program.
+2. Define a structure to store identifier names and data types.
+3. Read the identifiers and their data types.
+4. Store the entries in the symbol table.
+5. Display the symbol table.
+
+## PROGRAM
+
+**Filename: `symbol.c`**
+
+```c
+#include <stdio.h>
+
+struct Symbol {
+    char name[20], type[20];
+};
+
+int main()
+{
+    struct Symbol s[20];
+    int n, i;
+
+    printf("Enter number of symbols: ");
+    scanf("%d", &n);
+
+    if (n < 1 || n > 20)
+    {
+        printf("Invalid number of symbols\n");
+        return 1;
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        printf("Enter name and type: ");
+        scanf("%19s %19s", s[i].name, s[i].type);
+    }
+
+    printf("\nName\tType\n");
+
+    for (i = 0; i < n; i++)
+        printf("%s\t%s\n", s[i].name, s[i].type);
+
+    return 0;
+}
+```
+
+## COMPILATION
+
+```bash
+gcc symbol.c -o symbol
+./symbol
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+Enter number of symbols: 2
+Enter name and type: a int
+Enter name and type: b float
+```
+
+**Output:**
+
+```text
+Name    Type
+a       int
+b       float
+```
+
+## RESULT
+
+Thus, a symbol table was implemented successfully to store and display identifiers and their data types.
+
+
+# EXPERIMENT 15
+
+## QUESTION
+
+Write a program to generate three-address code using LEX and YACC.
+
+## AIM
+
+To generate three-address code for arithmetic expressions using LEX and YACC.
+
+## PROCEDURE
+
+1. Create the LEX file `lexer.l` and YACC file `parser.y`.
+2. Define tokens for identifiers, numbers and arithmetic operators.
+3. Write grammar rules to recognize arithmetic expressions.
+4. Generate temporary variables for intermediate operations.
+5. Compile and execute the program to display three-address code.
+
+## PROGRAM
+
+### File 1: `lexer.l`
+
+```c
+%{
+#include "parser.tab.h"
+#include <stdlib.h>
+%}
+
+%%
+[a-zA-Z_][a-zA-Z0-9]* {
+    yylval.str = strdup(yytext);
+    return ID;
+}
+
+[0-9]+ {
+    yylval.str = strdup(yytext);
+    return NUM;
+}
+
+[ \t\n]+ ;
+. { return yytext[0]; }
+%%
+
+int yywrap()
+{
+    return 1;
+}
+```
+
+### File 2: `parser.y`
+
+```c
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int yylex(void);
+void yyerror(const char *s);
+int count = 0;
+
+char *code(char *a, char op, char *b)
+{
+    char t[20];
+    sprintf(t, "t%d", ++count);
+    printf("%s = %s %c %s\n", t, a, op, b);
+    return strdup(t);
+}
+%}
+
+%union {
+    char *str;
+}
+
+%token <str> ID NUM
+%type <str> expr
+
+%left '+' '-'
+%left '*' '/'
+
+%%
+input:
+    expr
+    ;
+
+expr:
+      expr '+' expr { $$ = code($1, '+', $3); }
+    | expr '-' expr { $$ = code($1, '-', $3); }
+    | expr '*' expr { $$ = code($1, '*', $3); }
+    | expr '/' expr { $$ = code($1, '/', $3); }
+    | '(' expr ')'  { $$ = $2; }
+    | ID            { $$ = $1; }
+    | NUM           { $$ = $1; }
+    ;
+%%
+
+int main()
+{
+    printf("Enter expression:\n");
+    yyparse();
+    return 0;
+}
+
+void yyerror(const char *s)
+{
+    printf("Invalid expression\n");
+}
+```
+
+## COMPILATION
+
+```bash
+bison -d parser.y
+flex lexer.l
+gcc parser.tab.c lex.yy.c -o tac -lfl
+./tac
+```
+
+## OUTPUT
+
+**Input:**
+
+```text
+a+b*c
+```
+
+**Output:**
+
+```text
+t1 = b * c
+t2 = a + t1
+```
+
+## RESULT
+
+Thus, three-address code was generated successfully for arithmetic expressions using LEX and YACC.
+
+
+
+
+EXPERIMENT 9
+QUESTION
+
+Write a program to Implement Simple Code Optimization Techniques using Constant Folding.
+
+AIM
+
+To implement constant folding to evaluate constant expressions during compilation.
+
+PROCEDURE
+Create a C program.
+Read an assignment containing a constant arithmetic expression.
+Identify the two constant operands and operator.
+Evaluate the expression at compile-time using constant folding.
+Display the optimized expression.
+PROGRAM
+
+Filename: folding.c
+
+#include <stdio.h>
+
+int main()
+{
+    char var, op;
+    int a, b, result;
+
+    printf("Enter expression (a=5+3): ");
+    scanf(" %c = %d %c %d", &var, &a, &op, &b);
+
+    switch (op)
+    {
+        case '+': result = a + b; break;
+        case '-': result = a - b; break;
+        case '*': result = a * b; break;
+        case '/':
+            if (b == 0)
+            {
+                printf("Division by zero\n");
+                return 1;
+            }
+            result = a / b;
+            break;
+        default:
+            printf("Invalid operator\n");
+            return 1;
+    }
+
+    printf("Optimized code: %c = %d\n", var, result);
+
+    return 0;
+}
+OUTPUT
+
+Input:
+
+Enter expression (a=5+3): x=5+3
+
+Output:
+
+Optimized code: x = 8
+RESULT
+
+Thus, constant folding was implemented successfully to optimize constant arithmetic expressions.
+
+
+
+
+
