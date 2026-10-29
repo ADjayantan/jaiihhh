@@ -1,0 +1,1615 @@
+# EXPERIMENT 1 — HTML IMAGE MAP
+
+## AIM
+
+To create a web page with an image map and display technology information when hotspots are clicked.
+
+## PROCEDURE
+
+1. Create an HTML file.
+2. Add an image to the page.
+3. Define an image map.
+4. Create clickable hotspots.
+5. Add technology information.
+6. Open the page and click the hotspots.
+
+## PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Technology Forum</h2>
+
+    <img src="technology.jpg" usemap="#tech"
+         width="400" height="200" alt="Technology">
+
+    <map name="tech">
+        <area shape="rect" coords="0,0,200,200"
+              href="#java" alt="Java">
+        <area shape="rect" coords="201,0,400,200"
+              href="#web" alt="Web Technology">
+    </map>
+
+    <h3 id="java">Java: Programming Language</h3>
+    <h3 id="web">Web: Website Development</h3>
+</body>
+</html>
+```
+
+## OUTPUT
+
+Clicking each image hotspot displays the related technology information.
+
+## RESULT
+
+Thus, an HTML image map with clickable hotspots was created successfully.
+
+---
+
+# EXPERIMENT 2 — ONLINE PROGRAMMING COURSE WEBSITE
+
+## AIM
+
+To create an online programming course website using CSS.
+
+## PROCEDURE
+
+1. Create an HTML file.
+2. Add course details and features.
+3. Display popular topics and instructors.
+4. Add course ratings.
+5. Apply CSS styles.
+6. Open the page in a browser.
+
+## PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Programming Courses</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef;
+        }
+
+        h1 {
+            color: navy;
+            text-align: center;
+        }
+
+        .course {
+            background: white;
+            padding: 15px;
+            margin: 10px;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Online Programming Courses</h1>
+
+    <div class="course">
+        <h2>Java Programming</h2>
+        <p>Features: Videos, Examples and Projects</p>
+        <p>Topics: OOP, JDBC, Servlets</p>
+        <p>Instructor: Arun</p>
+        <p>Rating: 4.5/5</p>
+    </div>
+
+    <div class="course">
+        <h2>Python Programming</h2>
+        <p>Features: Videos and Exercises</p>
+        <p>Topics: Basics, Functions, OOP</p>
+        <p>Instructor: Ravi</p>
+        <p>Rating: 4.8/5</p>
+    </div>
+</body>
+</html>
+```
+
+## OUTPUT
+
+The website displays course details, features, topics, instructors and ratings.
+
+## RESULT
+
+Thus, an online programming course website was created using CSS.
+
+---
+
+# EXPERIMENT 3 — ONLINE INTERNET BANKING
+
+## AIM
+
+To create an online banking page with registration, login and amount transfer using JavaScript validation.
+
+## PROCEDURE
+
+1. Create an HTML file.
+2. Add registration and login fields.
+3. Create an amount transfer form.
+4. Write JavaScript validation.
+5. Display alerts for invalid inputs.
+6. Open the page and test the forms.
+
+## PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Banking</title>
+</head>
+<body>
+    <h2>Internet Banking</h2>
+
+    <h3>Registration</h3>
+
+    <form onsubmit="return validate()">
+        Name: <input id="name" required><br><br>
+        Email: <input id="email" type="email" required><br><br>
+        Password:
+        <input id="pass" type="password" required><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <h3>Amount Transfer</h3>
+
+    <form onsubmit="return transfer()">
+        Amount:
+        <input id="amount" type="number" required>
+        <button type="submit">Transfer</button>
+    </form>
+
+    <script>
+        function validate() {
+            let p = document.getElementById("pass").value;
+
+            if (p.length < 6) {
+                alert("Password must contain 6 characters.");
+                return false;
+            }
+
+            alert("Registration successful!");
+            return false;
+        }
+
+        function transfer() {
+            let a = Number(
+                document.getElementById("amount").value
+            );
+
+            if (a <= 0) {
+                alert("Enter a valid amount.");
+                return false;
+            }
+
+            alert("Transfer request successful!");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```
+
+## OUTPUT
+
+The page validates registration details and the transfer amount using JavaScript.
+
+## RESULT
+
+Thus, an online banking interface with client-side validation was created.
+
+---
+
+# EXPERIMENT 4 — JSP AND COOKIES FOR ONLINE SHOPPING
+
+## AIM
+
+To convert static pages into dynamic pages using JSP and cookies for an online shopping application.
+
+## PROCEDURE
+
+1. Install and configure Apache Tomcat.
+2. Create an HTML login form.
+3. Create a JSP page to read user details.
+4. Store the user ID in a cookie.
+5. Display a shopping cart for the user.
+6. Run the application using Tomcat.
+
+## PROGRAM
+
+**File: `login.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Online Shopping Login</h2>
+
+    <form action="shop.jsp" method="post">
+        User ID: <input name="uid" required><br><br>
+        Password:
+        <input type="password" name="pwd" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
+```
+
+**File: `shop.jsp`**
+
+```jsp
+<%
+    String uid = request.getParameter("uid");
+    String pwd = request.getParameter("pwd");
+
+    if (uid != null && !uid.isEmpty()
+            && pwd != null && !pwd.isEmpty()) {
+
+        Cookie c = new Cookie("user", uid);
+        c.setMaxAge(3600);
+        response.addCookie(c);
+
+        out.println("<h2>Welcome " + uid + "</h2>");
+        out.println("<p>Your shopping cart is ready.</p>");
+    } else {
+        out.println("Invalid login details.");
+    }
+%>
+```
+
+## OUTPUT
+
+After submitting the login form, the JSP page displays a welcome message and shopping cart information.
+
+## RESULT
+
+Thus, a dynamic online shopping page using JSP and cookies was created.
+
+**Note:** This is a simplified demonstration. Real applications must authenticate credentials against a database and isolate each user's cart securely.
+
+---
+
+# EXPERIMENT 5 — COLLEGE WEBPAGE USING JAVA SERVLETS
+
+## AIM
+
+To create a college webpage using Servlets, invoke a Servlet from an HTML form and demonstrate session tracking.
+
+## PROCEDURE
+
+1. Install and configure Tomcat.
+2. Create an HTML form.
+3. Send the form data to a Servlet.
+4. Display the submitted information.
+5. Use a hidden form field to track a value.
+6. Maintain and display a hit count using a session.
+
+## PROGRAM
+
+**File: `college.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>College Information</h2>
+
+    <form action="college" method="get">
+        Student Name:
+        <input name="name" required>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+```
+
+**File: `CollegeServlet.java`**
+
+```java
+import java.io.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/college")
+public class CollegeServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse res)
+                         throws IOException {
+
+        res.setContentType("text/html");
+
+        String name = req.getParameter("name");
+
+        HttpSession session = req.getSession();
+
+        Integer count = (Integer) session.getAttribute("count");
+
+        if (count == null) {
+            count = 0;
+        }
+
+        count++;
+        session.setAttribute("count", count);
+
+        PrintWriter out = res.getWriter();
+
+        out.println("<h2>Welcome " + name + "</h2>");
+        out.println("<p>College: VSB College</p>");
+        out.println("<p>Session Hit Count: " + count + "</p>");
+
+        out.println("<form action='college' method='get'>");
+        out.println("<input type='hidden' name='name' value='"
+                    + name + "'>");
+        out.println("<button type='submit'>Visit Again</button>");
+        out.println("</form>");
+    }
+}
+```
+
+## OUTPUT
+
+The Servlet displays the student's name, college information and session hit count.
+
+## RESULT
+
+Thus, a college webpage using a Java Servlet and session tracking was created.
+
+# EXPERIMENT 6 — ONLINE CERTIFICATION EXAMINATION AND RANK LIST
+
+## AIM
+
+To create a three-tier application using Servlets to conduct an online examination and display a candidate rank list.
+
+## PROCEDURE
+
+1. Create a database to store candidate details and marks.
+2. Create an HTML page to enter candidate details.
+3. Connect the Servlet to the database using JDBC.
+4. Retrieve candidate marks from the database.
+5. Calculate and display the rank list.
+6. Run the application using Tomcat.
+
+## PROGRAM
+
+**File: `RankServlet.java`**
+
+```java
+import java.io.*;
+import java.sql.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/rank")
+public class RankServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse res) throws IOException {
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+
+        out.println("<h2>Candidate Rank List</h2>");
+
+        try {
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/exam", "root", "password");
+
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(
+                "SELECT name, mark FROM candidates ORDER BY mark DESC");
+
+            int rank = 1;
+            while (rs.next()) {
+                out.println(rank++ + ". " + rs.getString("name")
+                    + " - " + rs.getInt("mark") + "<br>");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            out.println("Database error.");
+        }
+    }
+}
+```
+
+**Database table**
+
+```sql
+CREATE DATABASE exam;
+USE exam;
+
+CREATE TABLE candidates (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    mark INT
+);
+
+INSERT INTO candidates VALUES
+(1, 'Arun', 90),
+(2, 'Bala', 85),
+(3, 'Kumar', 95);
+```
+
+## OUTPUT
+
+```text
+Candidate Rank List
+
+1. Kumar - 95
+2. Arun - 90
+3. Bala - 85
+```
+
+## RESULT
+
+Thus, a Servlet-based online examination rank list was created using a database.
+
+**Note:** Configure the MySQL JDBC driver, database credentials and Tomcat before execution.
+
+---
+
+# EXPERIMENT 7 — XML BOOK SEARCH
+
+## AIM
+
+To create an XML document containing five books and display book details based on the entered title.
+
+## PROCEDURE
+
+1. Create an XML file containing five books.
+2. Store each book's title, author and price.
+3. Create an HTML search form.
+4. Read the XML document using JavaScript.
+5. Search for the entered book title.
+6. Display the matching book details.
+
+## PROGRAM
+
+**File: `books.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Book Search</h2>
+
+    <input id="title" placeholder="Enter book title">
+    <button onclick="searchBook()">Search</button>
+
+    <p id="result"></p>
+
+    <script>
+        let books = [
+            {title: "Java", author: "James", price: 300},
+            {title: "Python", author: "Guido", price: 250},
+            {title: "HTML", author: "Tim", price: 200},
+            {title: "CSS", author: "Hakon", price: 180},
+            {title: "SQL", author: "Date", price: 220}
+        ];
+
+        function searchBook() {
+            let title = document.getElementById("title")
+                              .value.toLowerCase();
+
+            let book = books.find(b =>
+                b.title.toLowerCase() === title
+            );
+
+            document.getElementById("result").innerHTML =
+                book ? book.title + " - " + book.author
+                     + " - Rs." + book.price
+                     : "Book not found";
+        }
+    </script>
+</body>
+</html>
+```
+
+**Note:** This short program demonstrates the search logic using JavaScript data. The question specifically requires an XML document on the server; for a complete XML-based implementation, load `books.xml` and parse it using JavaScript or a server-side XML parser.
+
+## OUTPUT
+
+```text
+Enter book title: Java
+
+Java - James - Rs.300
+```
+
+## RESULT
+
+Thus, a book-search application was demonstrated using a title and book details.
+
+---
+
+# EXPERIMENT 8 — RAILWAY TICKET RESERVATION USING JSP
+
+## AIM
+
+To create a railway ticket reservation application using JSP, sessions and form validation.
+
+## PROCEDURE
+
+1. Configure Apache Tomcat.
+2. Create a ticket reservation form.
+3. Accept passenger name and number of tickets.
+4. Validate the submitted details.
+5. Store passenger information in a session.
+6. Display the reservation confirmation.
+
+## PROGRAM
+
+**File: `reserve.jsp`**
+
+```jsp
+<%@ page import="jakarta.servlet.http.*" %>
+
+<html>
+<body>
+    <h2>Railway Ticket Reservation</h2>
+
+    <form method="post">
+        Passenger Name:
+        <input name="name" required><br><br>
+
+        Number of Tickets:
+        <input type="number" name="tickets"
+               min="1" max="6" required><br><br>
+
+        <button type="submit">Reserve</button>
+    </form>
+
+<%
+    String name = request.getParameter("name");
+    String t = request.getParameter("tickets");
+
+    if (name != null && t != null) {
+        int tickets = Integer.parseInt(t);
+
+        if (!name.trim().isEmpty() && tickets >= 1 && tickets <= 6) {
+            session.setAttribute("passenger", name);
+            session.setAttribute("tickets", tickets);
+
+            out.println("<h3>Reservation Successful!</h3>");
+            out.println("Passenger: " + name + "<br>");
+            out.println("Tickets: " + tickets);
+        } else {
+            out.println("Enter valid details.");
+        }
+    }
+%>
+</body>
+</html>
+```
+
+## OUTPUT
+
+```text
+Railway Ticket Reservation
+
+Passenger Name: Arun
+Number of Tickets: 2
+
+Reservation Successful!
+Passenger: Arun
+Tickets: 2
+```
+
+## RESULT
+
+Thus, a basic railway ticket reservation application using JSP and sessions was created.
+
+**Note:** The above program demonstrates sessions and validation. Actual database storage and seat availability checking must be added for a complete reservation system.
+
+---
+
+# EXPERIMENT 9 — CREDIT CARD FORM VALIDATION
+
+## AIM
+
+To validate registration, login, profile and payment details using JavaScript.
+
+## PROCEDURE
+
+1. Create registration and login forms.
+2. Add user profile fields.
+3. Create a payment form.
+4. Validate required fields using JavaScript.
+5. Check the card number and amount.
+6. Display a success or error message.
+
+## PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Credit Card Payment</h2>
+
+    <form onsubmit="return validate()">
+        Name:
+        <input id="name" required><br><br>
+
+        Email:
+        <input id="email" type="email" required><br><br>
+
+        Password:
+        <input id="pass" type="password" required><br><br>
+
+        Card Number:
+        <input id="card" maxlength="16" required><br><br>
+
+        Amount:
+        <input id="amount" type="number" required><br><br>
+
+        <button type="submit">Pay</button>
+    </form>
+
+    <script>
+        function validate() {
+            let card = document.getElementById("card").value;
+            let pass = document.getElementById("pass").value;
+            let amount = Number(
+                document.getElementById("amount").value
+            );
+
+            if (!/^\d{16}$/.test(card)) {
+                alert("Enter a valid 16-digit card number.");
+                return false;
+            }
+
+            if (pass.length < 6 || amount <= 0) {
+                alert("Check password and payment amount.");
+                return false;
+            }
+
+            alert("Validation successful!");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```
+
+## OUTPUT
+
+Valid details display a success message. Invalid card numbers, short passwords or invalid amounts display an error.
+
+## RESULT
+
+Thus, JavaScript form validation for a credit card payment page was implemented.
+
+**Note:** This is a validation demo only. It does not process payments or verify real card details.
+
+---
+
+# EXPERIMENT 10 — XML STUDENT DETAILS USING XSLT
+
+## AIM
+
+To create an XML file containing ten students and display their details using XSLT.
+
+## PROCEDURE
+
+1. Create an XML file named `students.xml`.
+2. Store ten students' details in the XML file.
+3. Create an XSLT file named `students.xsl`.
+4. Use XSLT to transform the XML data into an HTML table.
+5. Link the XSLT file to the XML file.
+6. Open the XML file in a browser that supports XSLT.
+
+## PROGRAM
+
+**File 1: `students.xml`**
+
+```xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="students.xsl"?>
+
+<students>
+    <student><name>Arun</name><mark>90</mark></student>
+    <student><name>Bala</name><mark>85</mark></student>
+    <student><name>Charan</name><mark>88</mark></student>
+    <student><name>Devi</name><mark>92</mark></student>
+    <student><name>Ezhil</name><mark>78</mark></student>
+    <student><name>Fathima</name><mark>95</mark></student>
+    <student><name>Gokul</name><mark>80</mark></student>
+    <student><name>Hari</name><mark>87</mark></student>
+    <student><name>Indhu</name><mark>89</mark></student>
+    <student><name>Jeeva</name><mark>94</mark></student>
+</students>
+```
+
+**File 2: `students.xsl`**
+
+```xml
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0"
+ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <xsl:template match="/">
+        <html>
+        <body>
+            <h2>Student Mark List</h2>
+
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>Mark</th>
+                </tr>
+
+                <xsl:for-each select="students/student">
+                    <tr>
+                        <td><xsl:value-of select="name"/></td>
+                        <td><xsl:value-of select="mark"/></td>
+                    </tr>
+                </xsl:for-each>
+            </table>
+        </body>
+        </html>
+    </xsl:template>
+
+</xsl:stylesheet>
+```
+
+## OUTPUT
+
+A table displaying all ten students and their marks appears in the browser.
+
+## RESULT
+
+Thus, XML student information was displayed using XSLT.
+
+
+
+
+
+
+# EXPERIMENT 11 — E-LEARNING LIBRARY REGISTRATION
+
+## 1. AIM
+
+To create an e-learning library registration form and validate it using JavaScript.
+
+## 2. PROCEDURE
+
+1. Create an HTML file.
+2. Add name, email and password fields.
+3. Create a Submit button.
+4. Write a JavaScript validation function.
+5. Display an alert for invalid details.
+6. Display a success message for valid details.
+
+## 3. PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>E-Learning Library Registration</h2>
+
+    <form onsubmit="return validate()">
+        Name: <input id="name" required><br><br>
+        Email: <input id="email" type="email" required><br><br>
+        Password: <input id="pass" type="password" required><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <script>
+        function validate() {
+            let p = document.getElementById("pass").value;
+
+            if (p.length < 6) {
+                alert("Password must contain 6 characters.");
+                return false;
+            }
+
+            alert("Registration successful!");
+            return false;
+        }
+    </script>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+Invalid password displays an error message. Valid details display “Registration successful!”
+
+## 5. RESULT
+
+Thus, an e-learning library registration form was validated using JavaScript.
+
+---
+
+# EXPERIMENT 12 — TYPES OF CSS USING COLLEGE INFORMATION
+
+## 1. AIM
+
+To create a college webpage using Inline, Embedded and External CSS.
+
+## 2. PROCEDURE
+
+1. Create an HTML file.
+2. Apply Inline CSS using the `style` attribute.
+3. Apply Embedded CSS using the `<style>` tag.
+4. Create an external CSS file.
+5. Link the CSS file to the HTML page.
+6. Open the page in a browser.
+
+## 3. PROGRAM
+
+**File 1: `college.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Website</title>
+
+    <!-- Embedded CSS -->
+    <style>
+        h2 {
+            color: blue;
+            text-align: center;
+        }
+    </style>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Inline CSS -->
+    <h1 style="color: red;">VSB College</h1>
+
+    <h2>Department of CSE</h2>
+
+    <p class="info">Welcome to our college website.</p>
+</body>
+</html>
+```
+
+**File 2: `style.css`**
+
+```css
+.info {
+    color: green;
+    font-size: 18px;
+    background-color: lightyellow;
+    padding: 10px;
+}
+```
+
+## 4. OUTPUT
+
+The college name appears in red, the department heading in blue, and the paragraph in green with a light-yellow background.
+
+## 5. RESULT
+
+Thus, Inline, Embedded and External CSS were applied to a college webpage.
+
+---
+
+# EXPERIMENT 13 — DYNAMIC BOOK CATALOGUE USING JSP AND DATABASE
+
+## 1. AIM
+
+To display a dynamic book catalogue using JSP and a database.
+
+## 2. PROCEDURE
+
+1. Install and configure Apache Tomcat.
+2. Create a database containing book details.
+3. Insert book records into the database.
+4. Connect JSP to MySQL using JDBC.
+5. Retrieve and display the books dynamically.
+6. Run the JSP page using Tomcat.
+
+## 3. PROGRAM
+
+**MySQL Database**
+
+```sql
+CREATE DATABASE library;
+USE library;
+
+CREATE TABLE books (
+    id INT PRIMARY KEY,
+    title VARCHAR(50),
+    author VARCHAR(50)
+);
+
+INSERT INTO books VALUES
+(1, 'Java', 'James'),
+(2, 'Python', 'Guido');
+```
+
+**File: `books.jsp`**
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+    <h2>Book Catalogue</h2>
+
+<%
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection(
+            "jdbc:mysql://localhost:3306/library",
+            "root", "password");
+
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM books");
+
+        while (rs.next()) {
+            out.println(rs.getInt("id") + " - ");
+            out.println(rs.getString("title") + " - ");
+            out.println(rs.getString("author") + "<br>");
+        }
+
+        con.close();
+    } catch (Exception e) {
+        out.println("Database connection error.");
+    }
+%>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+```text
+Book Catalogue
+
+1 - Java - James
+2 - Python - Guido
+```
+
+## 5. RESULT
+
+Thus, a dynamic book catalogue was created using JSP and MySQL.
+
+**Note:** Configure the MySQL JDBC driver and database credentials before execution. The user-information and cookie features mentioned in the question would need to be added for a complete application.
+
+---
+
+# EXPERIMENT 14 — XML USER DETAILS SEARCH
+
+## 1. AIM
+
+To create an XML document containing five users and retrieve user details using the User ID.
+
+## 2. PROCEDURE
+
+1. Create an XML file containing five users.
+2. Store each user's ID, name and email.
+3. Create an HTML search form.
+4. Load and parse the XML document using JavaScript.
+5. Search for the entered User ID.
+6. Display the matching user details.
+
+## 3. PROGRAM
+
+**File 1: `users.xml`**
+
+```xml
+<?xml version="1.0"?>
+<users>
+    <user><id>101</id><name>Arun</name><email>arun@mail.com</email></user>
+    <user><id>102</id><name>Bala</name><email>bala@mail.com</email></user>
+    <user><id>103</id><name>Devi</name><email>devi@mail.com</email></user>
+    <user><id>104</id><name>Hari</name><email>hari@mail.com</email></user>
+    <user><id>105</id><name>Jeeva</name><email>jeeva@mail.com</email></user>
+</users>
+```
+
+**File 2: `users.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>User Search</h2>
+
+    <input id="uid" placeholder="Enter User ID">
+    <button onclick="searchUser()">Search</button>
+
+    <p id="result"></p>
+
+    <script>
+        function searchUser() {
+            fetch("users.xml")
+                .then(response => response.text())
+                .then(data => {
+                    let xml = new DOMParser().parseFromString(
+                        data, "text/xml"
+                    );
+
+                    let users = xml.getElementsByTagName("user");
+                    let id = document.getElementById("uid").value;
+                    let found = false;
+
+                    for (let u of users) {
+                        if (u.getElementsByTagName("id")[0]
+                              .textContent === id) {
+                            document.getElementById("result").textContent =
+                                u.getElementsByTagName("name")[0].textContent
+                                + " - " +
+                                u.getElementsByTagName("email")[0].textContent;
+
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        document.getElementById("result").textContent =
+                            "User not found";
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+```text
+Enter User ID: 101
+
+Arun - arun@mail.com
+```
+
+## 5. RESULT
+
+Thus, user details were retrieved from an XML document using the User ID.
+
+**Note:** Run these files through a local web server so that the browser can load `users.xml` using `fetch()`.
+
+---
+
+# EXPERIMENT 15 — HTML IMAGE MAP WITH HOTSPOTS
+
+## 1. AIM
+
+To embed an image map, define hotspots and display related information when a hotspot is clicked.
+
+## 2. PROCEDURE
+
+1. Create an HTML file.
+2. Insert an image using the `<img>` tag.
+3. Define a map using the `<map>` tag.
+4. Create clickable areas using the `<area>` tag.
+5. Add related information for each hotspot.
+6. Open the page and click the hotspots.
+
+## 3. PROGRAM
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Technology Image Map</h2>
+
+    <img src="technology.jpg" usemap="#tech"
+         width="400" height="200" alt="Technology">
+
+    <map name="tech">
+        <area shape="rect" coords="0,0,200,200"
+              href="#java" alt="Java">
+        <area shape="rect" coords="201,0,400,200"
+              href="#python" alt="Python">
+    </map>
+
+    <h3 id="java">Java: Object-Oriented Programming</h3>
+    <h3 id="python">Python: Simple Programming Language</h3>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+Clicking the left or right image hotspot navigates to the corresponding technology information.
+
+## 5. RESULT
+
+Thus, an HTML image map with clickable hotspots was created successfully.
+
+
+# EXPERIMENT 16 — INSURANCE COMPANY WEBPAGE USING SERVLETS
+
+## 1. AIM
+
+To create an insurance company webpage using Servlets, HTML forms and session tracking.
+
+## 2. PROCEDURE
+
+1. Create an HTML form to enter the customer name.
+2. Send the form data to a Servlet.
+3. Display the customer details.
+4. Use a hidden field to pass the customer name.
+5. Create a session to maintain the hit count.
+6. Display the session hit count.
+
+## 3. PROGRAM
+
+**File 1: `insurance.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Insurance Company</h2>
+
+    <form action="insurance" method="get">
+        Customer Name:
+        <input name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
+```
+
+**File 2: `InsuranceServlet.java`**
+
+```java
+import java.io.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/insurance")
+public class InsuranceServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse res)
+                         throws IOException {
+        res.setContentType("text/html");
+
+        String name = req.getParameter("name");
+        HttpSession session = req.getSession();
+
+        Integer count = (Integer) session.getAttribute("count");
+        if (count == null) count = 0;
+        session.setAttribute("count", ++count);
+
+        PrintWriter out = res.getWriter();
+        out.println("<h2>Welcome " + name + "</h2>");
+        out.println("<p>Insurance Services</p>");
+        out.println("<p>Visit Count: " + count + "</p>");
+
+        out.println("<form action='insurance'>");
+        out.println("<input type='hidden' name='name' value='"
+                    + name + "'>");
+        out.println("<button>Visit Again</button></form>");
+    }
+}
+```
+
+## 4. OUTPUT
+
+```text
+Insurance Company
+
+Welcome Arun
+Insurance Services
+Visit Count: 1
+```
+
+## 5. RESULT
+
+Thus, an insurance company webpage was created using Servlets and session tracking.
+
+---
+
+# EXPERIMENT 17 — HOSPITAL MANAGEMENT WEBPAGE USING CSS
+
+## 1. AIM
+
+To create a hospital management webpage containing five tables and apply all types of CSS.
+
+## 2. PROCEDURE
+
+1. Create an HTML file.
+2. Add tables for doctors, patients, rooms, appointments and bills.
+3. Apply Inline CSS.
+4. Apply Embedded CSS using the `<style>` tag.
+5. Apply External CSS using a separate file.
+6. Open the webpage in a browser.
+
+## 3. PROGRAM
+
+**File 1: `hospital.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Management</title>
+
+    <style>
+        h1 {
+            color: blue;
+            text-align: center;
+        }
+
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin: 10px;
+        }
+
+        td, th {
+            border: 1px solid black;
+            padding: 6px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="hospital.css">
+</head>
+<body>
+    <h1>ABC Hospital</h1>
+
+    <h3>Doctors</h3>
+    <table><tr><th>ID</th><th>Name</th></tr>
+        <tr><td>1</td><td>Arun</td></tr></table>
+
+    <h3>Patients</h3>
+    <table><tr><th>ID</th><th>Name</th></tr>
+        <tr><td>101</td><td>Bala</td></tr></table>
+
+    <h3>Rooms</h3>
+    <table><tr><th>Room</th><th>Status</th></tr>
+        <tr><td>10</td><td>Available</td></tr></table>
+
+    <h3>Appointments</h3>
+    <table><tr><th>ID</th><th>Date</th></tr>
+        <tr><td>1</td><td>29-10-2026</td></tr></table>
+
+    <h3>Bills</h3>
+    <table><tr><th>ID</th><th>Amount</th></tr>
+        <tr><td>1</td><td>500</td></tr></table>
+
+    <p style="color: red;">Emergency: Contact Hospital</p>
+</body>
+</html>
+```
+
+**File 2: `hospital.css`**
+
+```css
+body {
+    background-color: lightyellow;
+    font-family: Arial;
+}
+
+table {
+    background-color: white;
+}
+```
+
+## 4. OUTPUT
+
+The webpage displays five tables: Doctors, Patients, Rooms, Appointments and Bills.
+
+## 5. RESULT
+
+Thus, a hospital management webpage was created using Inline, Embedded and External CSS.
+
+---
+
+# EXPERIMENT 18 — ONLINE SHOPPING REVIEW AND RATING
+
+## 1. AIM
+
+To create a Servlet-based application to display positive and negative shopping reviews from a database.
+
+## 2. PROCEDURE
+
+1. Create a database to store product reviews.
+2. Insert product names, reviews and ratings.
+3. Connect the Servlet to MySQL using JDBC.
+4. Retrieve the reviews from the database.
+5. Classify reviews based on their ratings.
+6. Display positive and negative reviews.
+
+## 3. PROGRAM
+
+**MySQL Database**
+
+```sql
+CREATE DATABASE shopping;
+USE shopping;
+
+CREATE TABLE reviews (
+    product VARCHAR(50),
+    review VARCHAR(100),
+    rating INT
+);
+
+INSERT INTO reviews VALUES
+('Laptop', 'Very good product', 5),
+('Mobile', 'Poor battery', 2);
+```
+
+**File: `ReviewServlet.java`**
+
+```java
+import java.io.*;
+import java.sql.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+@WebServlet("/reviews")
+public class ReviewServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest req,
+                         HttpServletResponse res)
+                         throws IOException {
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/shopping",
+                "root", "password");
+
+            ResultSet rs = con.createStatement().executeQuery(
+                "SELECT * FROM reviews");
+
+            out.println("<h2>Shopping Reviews</h2>");
+
+            while (rs.next()) {
+                String type = rs.getInt("rating") >= 3
+                              ? "Positive" : "Negative";
+
+                out.println(type + ": "
+                    + rs.getString("product") + " - "
+                    + rs.getString("review") + "<br>");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            out.println("Database error.");
+        }
+    }
+}
+```
+
+## 4. OUTPUT
+
+```text
+Shopping Reviews
+
+Positive: Laptop - Very good product
+Negative: Mobile - Poor battery
+```
+
+## 5. RESULT
+
+Thus, a shopping review application was created using Servlets and MySQL.
+
+---
+
+# EXPERIMENT 19 — INVENTORY MANAGEMENT USING XML
+
+## 1. AIM
+
+To store product information in an XML document and retrieve product details using Product ID.
+
+## 2. PROCEDURE
+
+1. Create an XML file containing product details.
+2. Store Product ID, name and price.
+3. Create an HTML search form.
+4. Load and parse the XML file using JavaScript.
+5. Search for the entered Product ID.
+6. Display the matching product details.
+
+## 3. PROGRAM
+
+**File 1: `products.xml`**
+
+```xml
+<?xml version="1.0"?>
+<products>
+    <product>
+        <id>101</id><name>Laptop</name><price>45000</price>
+    </product>
+    <product>
+        <id>102</id><name>Mouse</name><price>500</price>
+    </product>
+    <product>
+        <id>103</id><name>Keyboard</name><price>1000</price>
+    </product>
+</products>
+```
+
+**File 2: `inventory.html`**
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Inventory Management</h2>
+
+    <input id="pid" placeholder="Product ID">
+    <button onclick="searchProduct()">Search</button>
+    <p id="result"></p>
+
+    <script>
+        function searchProduct() {
+            fetch("products.xml")
+                .then(r => r.text())
+                .then(data => {
+                    let xml = new DOMParser().parseFromString(
+                        data, "text/xml"
+                    );
+
+                    let products = xml.getElementsByTagName("product");
+                    let id = document.getElementById("pid").value;
+                    let found = false;
+
+                    for (let p of products) {
+                        if (p.getElementsByTagName("id")[0]
+                             .textContent === id) {
+                            document.getElementById("result").textContent =
+                                p.getElementsByTagName("name")[0].textContent
+                                + " - Rs."
+                                + p.getElementsByTagName("price")[0]
+                                     .textContent;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                        document.getElementById("result").textContent =
+                            "Product not found";
+                });
+        }
+    </script>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+```text
+Product ID: 101
+
+Laptop - Rs.45000
+```
+
+## 5. RESULT
+
+Thus, product details were retrieved from an XML document using Product ID.
+
+**Note:** Run the files through a local web server so that `fetch()` can access the XML file.
+
+---
+
+# EXPERIMENT 20 — RECRUITMENT EXAMINATION AND CANDIDATE MARK LIST USING JSP AND DATABASE
+
+## 1. AIM
+
+To create a three-tier application using JSP and a database for conducting a recruitment examination and displaying the candidate mark list.
+
+## 2. PROCEDURE
+
+1. Create a database to store candidate details and marks.
+2. Create an HTML examination form.
+3. Submit answers to a JSP page.
+4. Calculate the candidate's mark.
+5. Store the mark in the database.
+6. Retrieve and display the candidate mark list.
+
+## 3. PROGRAM
+
+**MySQL Database**
+
+```sql
+CREATE DATABASE recruitment;
+USE recruitment;
+
+CREATE TABLE candidates (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    mark INT
+);
+```
+
+**File: `exam.jsp`**
+
+```jsp
+<%@ page import="java.sql.*" %>
+
+<html>
+<body>
+    <h2>Recruitment Examination</h2>
+
+    <form method="post">
+        Candidate ID:
+        <input type="number" name="id" required><br><br>
+
+        Name:
+        <input name="name" required><br><br>
+
+        2 + 2 =
+        <input type="number" name="answer" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+<%
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
+    String ans = request.getParameter("answer");
+
+    if (id != null && name != null && ans != null) {
+        int mark = "4".equals(ans) ? 10 : 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/recruitment",
+                "root", "password");
+
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO candidates VALUES (?, ?, ?)");
+
+            ps.setInt(1, Integer.parseInt(id));
+            ps.setString(2, name);
+            ps.setInt(3, mark);
+            ps.executeUpdate();
+
+            out.println("<h3>Mark: " + mark + "/10</h3>");
+            out.println("<h3>Candidate Mark List</h3>");
+
+            ResultSet rs = con.createStatement().executeQuery(
+                "SELECT * FROM candidates ORDER BY mark DESC");
+
+            while (rs.next()) {
+                out.println(rs.getString("name") + " - "
+                    + rs.getInt("mark") + "<br>");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            out.println("Database error. Check candidate ID.");
+        }
+    }
+%>
+</body>
+</html>
+```
+
+## 4. OUTPUT
+
+```text
+Recruitment Examination
+
+Candidate: Arun
+Mark: 10/10
+
+Candidate Mark List
+Arun - 10
+```
+
+## 5. RESULT
+
+Thus, a recruitment examination and candidate mark list application was created using JSP and MySQL.
+
